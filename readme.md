@@ -1,14 +1,15 @@
-# [gulp](http://gulpjs.com)-recess [![Build Status](https://travis-ci.org/sindresorhus/gulp-recess.svg?branch=master)](https://travis-ci.org/sindresorhus/gulp-recess)
+# [gulp](http://gulpjs.com)-recess-plus [![Build Status](https://travis-ci.org/shellscape/gulp-recess-plus.svg)](https://travis-ci.org/shellscape/gulp-recess-plus)
 
-> Lint CSS and LESS with [RECESS](https://github.com/twitter/recess)
+> A fork of [gulp-recess](https://github.com/sindresorhus/gulp-recess) with added functionality.
+
+> Lint CSS and LESS with [RECESS](https://github.com/twitter/recess).
 
 *Issues with the output should be reported on the RECESS [issue tracker](https://github.com/twitter/recess/issues).*
-
 
 ## Install
 
 ```sh
-$ npm install --save-dev gulp-recess
+$ npm install --save-dev gulp-recess-plus
 ```
 
 
@@ -16,7 +17,7 @@ $ npm install --save-dev gulp-recess
 
 ```js
 var gulp = require('gulp');
-var recess = require('gulp-recess');
+var recess = require('gulp-recess-plus');
 
 gulp.task('default', function () {
 	return gulp.src('src/app.css')
@@ -26,6 +27,19 @@ gulp.task('default', function () {
 });
 ```
 
+## Inline options support
+
+Inline recess configuration/option is now available for css/less files on a per-file basis. ala [jshint](http://jshint.com/docs/). For example:
+
+```css
+/* recess noIDs: true, noJSPrefix: true, noOverqualifying: true */
+
+.fancy {
+  border: 1px solid red;
+}
+```
+
+The options available exactly mirror the programmatic options listed for [recess](https://github.com/twitter/recess). Options specified on a per-file basis will override the options passed to gulp-recess and also any options loaded by .recessrc.
 
 ## API
 
