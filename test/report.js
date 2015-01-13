@@ -5,109 +5,109 @@ var recess = require('../');
 
 var out = process.stdout.write.bind(process.stdout);
 
-describe('gulp-recess', function () {
-	describe('report', function () {
-		var stdoutData = [];
+describe('gulp-recess-plus', function () {
+  describe('report', function () {
+    var stdoutData = [];
 
-		beforeEach(function () {
-			stdoutData = [];
-			process.stdout.write = function () {
-				stdoutData.push(arguments);
-			};
-		});
+    beforeEach(function () {
+      stdoutData = [];
+      process.stdout.write = function () {
+        stdoutData.push(arguments);
+      };
+    });
 
-		afterEach(function () {
-			process.stdout.write = out; // put it back even if test fails
-			stdoutData = null;
-		});
+    afterEach(function () {
+      process.stdout.write = out; // put it back even if test fails
+      stdoutData = null;
+    });
 
-		it('should lint valid CSS', function (done) {
-			var stream = recess();
-			var reporter = recess.reporter();
+    it('should lint valid CSS', function (done) {
+      var stream = recess();
+      var reporter = recess.reporter();
 
-			reporter.on('finish', function () {
-				assert(stdoutData.length === 0);
-				done();
-			});
+      reporter.on('finish', function () {
+        assert(stdoutData.length === 0);
+        done();
+      });
 
-			stream.pipe(reporter);
+      stream.pipe(reporter);
 
-			stream.write(new gutil.File({
-				path: 'fixture.css',
-				contents: new Buffer('.test-less{font-size:14px;background-color:green;}')
-			}));
+      stream.write(new gutil.File({
+        path: 'fixture.css',
+        contents: new Buffer('.test-less{font-size:14px;background-color:green;}')
+      }));
 
-			stream.end();
-		});
+      stream.end();
+    });
 
-		it('should lint invalid CSS', function (done) {
-			var stream = recess();
-			var reporter = recess.reporter({fail:false});
-			var actualData;
+    it('should lint invalid CSS', function (done) {
+      var stream = recess();
+      var reporter = recess.reporter({fail:false});
+      var actualData;
 
-			stream.on('data', function (data) {
-				actualData = data;
-			});
+      stream.on('data', function (data) {
+        actualData = data;
+      });
 
-			reporter.on('finish', function () {
-				process.stdout.write = out;
-				assert(stdoutData.length > 0);
-				done();
-			});
+      reporter.on('finish', function () {
+        process.stdout.write = out;
+        assert(stdoutData.length > 0);
+        done();
+      });
 
-			stream.pipe(reporter);
+      stream.pipe(reporter);
 
-			stream.write(new gutil.File({
-				path: 'fixture-invalid.css',
-				contents: new Buffer('#test{background-color:green;font-size:0px;}')
-			}));
+      stream.write(new gutil.File({
+        path: 'fixture-invalid.css',
+        contents: new Buffer('#test{background-color:green;font-size:0px;}')
+      }));
 
-			stream.end();
-		});
+      stream.end();
+    });
 
-		it('should lint invalid CSS and output minimal', function (done) {
-			var stream = recess();
-			var reporter = recess.reporter({fail:false, minimal:true});
-			var actualData;
+    it('should lint invalid CSS and output minimal', function (done) {
+      var stream = recess();
+      var reporter = recess.reporter({fail:false, minimal:true});
+      var actualData;
 
-			stream.on('data', function (data) {
-				actualData = data;
-			});
+      stream.on('data', function (data) {
+        actualData = data;
+      });
 
-			reporter.on('finish', function () {
-				process.stdout.write = out;
-				assert(stdoutData.length === 1);
-				done();
-			});
+      reporter.on('finish', function () {
+        process.stdout.write = out;
+        assert(stdoutData.length === 1);
+        done();
+      });
 
-			stream.pipe(reporter);
+      stream.pipe(reporter);
 
-			stream.write(new gutil.File({
-				path: 'fixture-invalid.css',
-				contents: new Buffer('#test{background-color:green;font-size:0px;}')
-			}));
+      stream.write(new gutil.File({
+        path: 'fixture-invalid.css',
+        contents: new Buffer('#test{background-color:green;font-size:0px;}')
+      }));
 
-			stream.end();
-		});
+      stream.end();
+    });
 
-		it('should error on invalid CSS', function (done) {
-			var stream = recess();
-			var reporter = recess.reporter();
+    it('should error on invalid CSS', function (done) {
+      var stream = recess();
+      var reporter = recess.reporter();
 
-			reporter.on('error', function (err) {
-				process.stdout.write = out;
-				assert(err.message.indexOf('fixture-invalid.css') > -1);
-				done();
-			});
+      reporter.on('error', function (err) {
+        process.stdout.write = out;
+        assert(err.message.indexOf('fixture-invalid.css') > -1);
+        done();
+      });
 
-			stream.pipe(reporter);
+      stream.pipe(reporter);
 
-			stream.write(new gutil.File({
-				path: 'fixture-invalid.css',
-				contents: new Buffer('#test{background-color:green;font-size:0px;}')
-			}));
+      stream.write(new gutil.File({
+        path: 'fixture-invalid.css',
+        contents: new Buffer('#test{background-color:green;font-size:0px;}')
+      }));
 
-			stream.end();
-		});
-	});
+      stream.end();
+    });
+  });
 });
