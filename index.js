@@ -12,15 +12,16 @@ var gutil = require('gulp-util'),
 function loadInlineOptions (options, contents) {
 
   if (/\/\*\s?recess/.test(contents)) {
-    var matches = contents.match(/\/\*\s?recess(.+?)\*\/|\/\/.*/),
+    var matches = contents.match(/\/\*\s?recess(.+?)\*\//),
     	pairs;
 
     if (matches.length > 1) {
+
     	// we could split on ',', but this is stricter
       pairs = matches[1].trim().match(/\w+(\s+)?:(\s+)?\w+(?=,?\s?)/g);
 
       // todo: improve the regex so this isn't needed
-      pairs.forEach(pairs, function (part) {
+      pairs.forEach(function (part) {
         var bits = part.split(':'),
           key = bits[0].trim(),
           value = bits[1].trim();
