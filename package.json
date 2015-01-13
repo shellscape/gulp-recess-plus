@@ -1,13 +1,13 @@
 {
-  "name": "gulp-recess",
-  "version": "1.1.1",
-  "description": "Lint CSS and LESS with RECESS",
+  "name": "gulp-recess-plus",
+  "version": "0.0.1",
+  "description": "Lint CSS and LESS with RECESS. A fork based on gulp-recess.",
   "license": "MIT",
-  "repository": "sindresorhus/gulp-recess",
+  "repository": "shellscape/gulp-recess",
   "author": {
-    "name": "Sindre Sorhus",
-    "email": "sindresorhus@gmail.com",
-    "url": "http://sindresorhus.com"
+    "name": "Andrew Powell",
+    "email": "andrew@shellscape.org",
+    "url": "http://shellscape.org"
   },
   "engines": {
     "node": ">=0.10.0"
